@@ -1,19 +1,3 @@
-Igniting React App
-. In last class - Created Basic React App
-
-. Today, production ready React App - From scratch without using create react-app
-
-. to Ignite our app - Bundler eg : vite,parcel,webpack
-
-. In create react-app, they use webpack bundler
-
-. Bundler is package/module of javascript code
-
-. to have a package in code -> we need Package Manager (eg : npm, yarn)
-
-npm init -> create package.json -> initialise our repo with npm 
-npm init -y -> to skip configuration
-. why npm ? helper packages -> React app is powered by a lot of packages for bundling, optimizing, minifying maven : java :: rnpm : react
 
 Parcel :
 
@@ -83,9 +67,16 @@ Remove main : app.js from package.json
 Write browserslist in package.json
 "browsersList" : [ "last 2 versions"]
 
-Homework :
+Config - driven UI : Different UI layout for different users - Backend driven config
 
-Read Parcel Documentation
-Types of script in script tage in html
-Issues:
-One issue I faced while setting up parcel is, though the server was succesfully started,I was getting 404 Page not found when run the application in browser. We were not able to find the root cause for long time. Finally, my npm was outdated and it did not throw any error during build. After updating the npm, it worked.
+Optional chaining ?
+
+Props (Properties) -> attributes passed through component tag -> similar to arguments passed in function in js -> received as parameters in the function (component in react)
+
+: const Component = (props)=>{()} :: func(arguments) : const func = (parameters) => {}
+
+Virtual DOM -> representation/copy of DOM with us
+
+Purpose : React Reconciliation -> React uses diff Algorithm to diff one tree (actually dom) from another which determines what needs to be updated and only re-renders the diff
+
+re-render everything if key is not mentioned
