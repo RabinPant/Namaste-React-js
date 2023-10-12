@@ -8,6 +8,8 @@ const Body = () => {
   const [content, setContent] = useState([]);
   const [inputContent, setInputContent] = useState("");
 
+  const [filteredResturant, setFilteredResturant] = useState([]);
+
   useEffect(() => {
     getResturants();
   }, []);
@@ -18,6 +20,9 @@ const Body = () => {
     const json = await data.json();
     // optional chaining
     setContent(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredResturant(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     console.log(
@@ -48,7 +53,7 @@ const Body = () => {
                   .toLowerCase()
                   .includes(inputContent.toLowerCase());
               });
-              setContent(filterData);
+              setFilteredResturant(filterData);
             }}
           >
             Search
@@ -61,14 +66,14 @@ const Body = () => {
               (res) => res.info.avgRating >= 4.5
             );
             console.log(filteredList);
-            setContent(filteredList);
+            setFilteredResturant(filteredList);
           }}
         >
           Top Rated Resturants
         </button>
       </div>
       <div className="res-container">
-        {content.map((res) => {
+        {filteredResturant.map((res) => {
           return <ResturantCard resData={res} key={res.info.id} />;
         })}
       </div>
