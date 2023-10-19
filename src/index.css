@@ -16,6 +16,9 @@
     padding:10px;
     margin:10px;
 }
+.nav-items > ul> li>:any-link{
+    text-decoration: none;
+}
 .res-container{
     display: flex;
     flex-wrap: wrap;

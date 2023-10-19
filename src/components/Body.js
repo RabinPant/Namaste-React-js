@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import ResturantCard from "../components/ResturantCard";
 import { resList } from "../utils/mockData";
 import { GET_RES_API_URL } from "../utils/constant";
+import { Link } from "react-router-dom";
 import Shimmer from "../components/Shimmer";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () => {
   const [content, setContent] = useState([]);
   const [inputContent, setInputContent] = useState("");
 
   const [filteredResturant, setFilteredResturant] = useState([]);
-
+  const onlineStatus = useOnlineStatus();
   useEffect(() => {
     getResturants();
   }, []);
@@ -30,7 +32,9 @@ const Body = () => {
       json.data.cards[2].card.card.gridElements.infoWithStyle.restaurants
     );
   };
-
+  if (onlineStatus == false) {
+    return <h1>You're internet access is not available try agian please!!</h1>;
+  }
   return content.length === 0 ? (
     <Shimmer />
   ) : (
@@ -74,7 +78,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredResturant.map((res) => {
-          return <ResturantCard resData={res} key={res.info.id} />;
+          return (
+            <Link to={"/restaurants/" + res.info.id} key={res.info.id}>
+              <ResturantCard resData={res} />
+            </Link>
+          );
         })}
       </div>
     </div>
