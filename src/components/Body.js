@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import ResturantCard, { withPromotedLable } from "../components/ResturantCard";
 import { resList } from "../utils/mockData";
@@ -6,13 +6,15 @@ import { GET_RES_API_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
 import Shimmer from "../components/Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
+
 const Body = () => {
   const [content, setContent] = useState([]);
   const [inputContent, setInputContent] = useState("");
-
   const [filteredResturant, setFilteredResturant] = useState([]);
   const ResturantCardPromoted = withPromotedLable(ResturantCard);
   const onlineStatus = useOnlineStatus();
+
   useEffect(() => {
     getResturants();
   }, []);
@@ -23,15 +25,18 @@ const Body = () => {
     const json = await data.json();
     // optional chaining
     setContent(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    console.log("json", json);
     setFilteredResturant(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+  const { setUserName, loggedInUser } = useContext(UserContext);
   if (onlineStatus == false) {
     return <h1>You're internet access is not available try agian please!!</h1>;
   }
+
   return content.length === 0 ? (
     <Shimmer />
   ) : (
@@ -66,7 +71,7 @@ const Body = () => {
             className="filter-btn px-4 py-2 bg-gray-100 rounded-xl"
             onClick={() => {
               const filteredList = content.filter(
-                (res) => res.info.avgRating >= 4.5
+                (res) => res.info.avgRating >= 4.0
               );
               console.log(filteredList);
               setFilteredResturant(filteredList);
@@ -74,6 +79,14 @@ const Body = () => {
           >
             Top Rated Resturants
           </button>
+        </div>
+        <div className="m-4 p-4 flex items-center">
+          <label>UserName:</label>
+          <input
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
       </div>
       <div className="flex flex-wrap">

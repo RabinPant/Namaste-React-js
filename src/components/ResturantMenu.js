@@ -9,6 +9,7 @@ import ResturantCategory from "./ResturantCategory";
 function ResturantMenu() {
   const { resId } = useParams();
 
+  const [showIndex, setShowIndex] = useState();
   //custom hook
   const resInfo = useResturantMenu(resId);
 
@@ -39,11 +40,13 @@ function ResturantMenu() {
       </p>
       {/* categories accordions */}
 
-      {categories.map((category) => {
+      {categories.map((category, index) => {
         return (
           <ResturantCategory
             data={category?.card?.card}
             key={category?.card?.card?.title}
+            showItems={index === showIndex ? true : false}
+            setShowIndex={() => setShowIndex(index)}
           />
         );
       })}

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CDN_URL } from "../utils/constant";
-
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 const ResturantCard = ({ resData }) => {
+  const { loggedInUser } = useContext(UserContext);
   const {
     cloudinaryImageId,
     name,
@@ -10,7 +12,6 @@ const ResturantCard = ({ resData }) => {
     costForTwo,
     deliveryTime,
   } = resData?.info;
-
   return (
     <div className="res-card m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200">
       <img src={CDN_URL + cloudinaryImageId} className="res-logo rounded-lg" />
@@ -19,6 +20,7 @@ const ResturantCard = ({ resData }) => {
       <h4>{avgRating}</h4>
       <h4>{costForTwo / 100} FOR TWO</h4>
       <h4>{deliveryTime} minutes</h4>
+      <h4>user-{loggedInUser}</h4>
     </div>
   );
 };
